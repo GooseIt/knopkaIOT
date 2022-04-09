@@ -7,7 +7,7 @@ import datetime
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
-bot_token = '5230558404:AAHe_TJo0bHER0c6o7vaj2o5i44RgM-aKNg'# put your (bot) token here
+bot_token = # put your (bot) token here
 link = f'https://api.telegram.org/bot{bot_token}/sendMessage'
 chat_id = 774802054# chat id with bot
 
