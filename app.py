@@ -51,25 +51,25 @@ class Shedule(object):
 
         info_ = 'call_num:' + str(call_info['call_num']) + 'call_type:' + str(call_info['call_type']) + 'call_time:' + str(call_info['call_time']) + ', ' + str(len(demo_time))
         
-        if call_time - self.alarm_time < self.time_delta:
+        if demo_idx == 0:
             return {'action_type': 'Выключить будильник.' + info_}
 
-        elif call_time - self.coffe_time < self.time_delta:
+        elif demo_idx == 1:
             return {'action_type': 'Поставить готовиться кофе.' + info_}
 
-        elif call_time - self.car_time < self.time_delta:
+        elif demo_idx == 2:
             return {'action_type': 'Поставить машину на автоподогрев.' + info_}
 
-        elif call_time - self.burger_time < self.time_delta:
+        elif demo_idx == 3:
             return {'action_type': 'Сделать стандартный заказ в Бургер Кинге.' + info_}
 
-        elif call_time >= self.lunch_start_time - self.time_delta and call_time <= self.lunch_end_time + self.time_delta:
+        elif demo_idx == 4:
             return {'action_type': 'Заказать стандартный обед в столовке офиса.' + info_}
 
-        elif call_time - self.turnoff_work_time < self.time_delta:
+        elif demo_idx == 5:
             return {'action_type': 'Выключить все системы на рабочем месте.' + info_}
 
-        elif call_time >= self.turnoff_home_time:
+        elif demo_idx == 6:
             return {'action_type': 'Выключить свет, телевизор и тд. в квартире.' + info_}
 
         else:
@@ -125,7 +125,7 @@ def hello_world():  # put application's code here
     button_response = json.loads(base64.b64decode(data_json["data"].encode('utf-8')))
     press_type = button_response['telemetry']['firstButton']['status']
     query_time = datetime.datetime.fromtimestamp(query_time) # will be instead of demo_time
-    if demo_idx == len(demo_time):
+    if demo_idx == 7 https://krutoj-servak.herokuapp.com/:
         demo_idx = 0 # reset states for demo
     action_exec = my_shedule.get_current_action(
         {'call_num':demo_idx, 'call_type':press_type, 'call_time':demo_time[demo_idx]}
