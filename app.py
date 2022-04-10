@@ -49,7 +49,7 @@ class Shedule(object):
         call_time = call_time.hour * 3600 + call_time.minute * 60 + call_time.second
         call_time = datetime.timedelta(seconds=call_time)
 
-        info_ = 'call_num:' + str(call_info['call_num']) + 'call_type:' + str(call_info['call_type']) + 'call_time:' + str(call_info['call_time'])
+        info_ = 'call_num:' + str(call_info['call_num']) + 'call_type:' + str(call_info['call_type']) + 'call_time:' + str(call_info['call_time']) + ', ' + str(len(demo_time))
         
         if call_time - self.alarm_time < self.time_delta:
             return {'action_type': 'Выключить будильник.' + info_}
@@ -63,7 +63,7 @@ class Shedule(object):
         elif call_time - self.burger_time < self.time_delta:
             return {'action_type': 'Сделать стандартный заказ в Бургер Кинге.' + info_}
 
-        elif call_time >= self.lunch_start_time and call_time <= self.lunch_end_time:
+        elif call_time >= self.lunch_start_time - self.time_delta and call_time <= self.lunch_end_time + self.time_delta:
             return {'action_type': 'Заказать стандартный обед в столовке офиса.' + info_}
 
         elif call_time - self.turnoff_work_time < self.time_delta:
