@@ -123,7 +123,7 @@ def hello_world():  # put application's code here
     button_response = json.loads(base64.b64decode(data_json["data"].encode('utf-8')))
     press_type = button_response['telemetry']['firstButton']['status']
     query_time = datetime.datetime.fromtimestamp(query_time) # will be instead of demo_time
-    if demo_idx == len(demo_time)-1:
+    if demo_idx == len(demo_time):
         demo_idx = 0 # reset states for demo
     action_exec = my_shedule.get_current_action(
         {'call_num':demo_idx, 'call_type':press_type, 'call_time':demo_time[demo_idx]}
