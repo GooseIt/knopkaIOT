@@ -49,29 +49,31 @@ class Shedule(object):
         call_time = call_time.hour * 3600 + call_time.minute * 60 + call_time.second
         call_time = datetime.timedelta(seconds=call_time)
 
+        info = str('call_num:', str(call_info[call_num]), 'call_type:', str(call_info[call_type]), 'call_time:', str(call_info['call_info']))
+        
         if call_time - self.alarm_time < self.time_delta:
-            return {'action_type': 'Выключить будильник.'}
+            return {'action_type': 'Выключить будильник.' + str(info)}
 
         elif call_time - self.coffe_time < self.time_delta:
-            return {'action_type': 'Поставить готовиться кофе.'}
+            return {'action_type': 'Поставить готовиться кофе.' + str(info)}
 
         elif call_time - self.car_time < self.time_delta:
-            return {'action_type': 'Поставить машину на автоподогрев.'}
+            return {'action_type': 'Поставить машину на автоподогрев.' + str(info)}
 
         elif call_time - self.burger_time < self.time_delta:
-            return {'action_type': 'Сделать стандартный заказ в Бургер Кинге.'}
+            return {'action_type': 'Сделать стандартный заказ в Бургер Кинге.' + str(info)}
 
         elif call_time >= self.lunch_start_time and call_time <= self.lunch_end_time:
-            return {'action_type': 'Заказать стандартный обед в столовке офиса.'}
+            return {'action_type': 'Заказать стандартный обед в столовке офиса.' + str(info)}
 
         elif call_time - self.turnoff_work_time < self.time_delta:
-            return {'action_type': 'Выключить все системы на рабочем месте.'}
+            return {'action_type': 'Выключить все системы на рабочем месте.' + str(info)}
 
         elif call_time >= self.turnoff_home_time:
-            return {'action_type': 'Выключить свет, телевизор и тд. в квартире.'}
+            return {'action_type': 'Выключить свет, телевизор и тд. в квартире.' + str(info)}
 
         else:
-            return {'action_type': 'В данный момент действий не запланировано.'}
+            return {'action_type': 'В данный момент действий не запланировано.' + str(info)}
 
     def double_click_handler(self, call_info):
         return {'action_type': 'Сообщение начальнику, что опоздаешь.'}
