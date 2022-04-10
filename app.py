@@ -49,7 +49,7 @@ class Shedule(object):
         call_time = call_time.hour * 3600 + call_time.minute * 60 + call_time.second
         call_time = datetime.timedelta(seconds=call_time)
 
-        info = str('call_num:', str(call_info[call_num]), 'call_type:', str(call_info[call_type]), 'call_time:', str(call_info['call_info']))
+        info = 'call_num:' + str(call_info[call_num]) + 'call_type:' + str(call_info[call_type]) + 'call_time:' + str(call_info['call_info']))
         
         if call_time - self.alarm_time < self.time_delta:
             return {'action_type': 'Выключить будильник.' + str(info)}
