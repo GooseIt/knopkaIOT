@@ -7,7 +7,7 @@ import datetime
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
-bot_token = # put your (bot) token here
+bot_token = '5230558404:AAHe_TJo0bHER0c6o7vaj2o5i44RgM-aKNg'# put your (bot) token here
 link = f'https://api.telegram.org/bot{bot_token}/sendMessage'
 chat_id = 774802054# chat id with bot
 
@@ -20,9 +20,9 @@ class Shedule(object):
         self.time_delta = time_delta
 
         self.alarm_time = datetime.timedelta(hours=8, minutes=0)
-        self.coffe_time = datetime.timedelta(hours=8, minutes=0)
-        self.car_time = datetime.timedelta(hours=8, minutes=0)
-        self.burger_time = datetime.timedelta(hours=8, minutes=30)
+        self.coffe_time = datetime.timedelta(hours=8, minutes=20)
+        self.car_time = datetime.timedelta(hours=8, minutes=40)
+        self.burger_time = datetime.timedelta(hours=9, minutes=0)
         self.lunch_start_time = datetime.timedelta(hours=14, minutes=0)
         self.lunch_end_time = datetime.timedelta(hours=15, minutes=0)
         self.turnoff_work_time = datetime.timedelta(hours=18, minutes=0)
@@ -49,13 +49,13 @@ class Shedule(object):
         call_time = call_time.hour * 3600 + call_time.minute * 60 + call_time.second
         call_time = datetime.timedelta(seconds=call_time)
 
-        if call_time - self.alarm_time < self.time_delta and call_num == 0:
+        if call_time - self.alarm_time < self.time_delta:
             return {'action_type': 'Выключить будильник.'}
 
-        elif call_time - self.coffe_time < self.time_delta and call_num == 1:
+        elif call_time - self.coffe_time < self.time_delta:
             return {'action_type': 'Поставить готовиться кофе.'}
 
-        elif call_time - self.car_time < self.time_delta and call_num == 2:
+        elif call_time - self.car_time < self.time_delta:
             return {'action_type': 'Поставить машину на автоподогрев.'}
 
         elif call_time - self.burger_time < self.time_delta:
@@ -86,13 +86,14 @@ class Shedule(object):
 my_shedule = Shedule()
 demo_idx = 0
 demo_time = [
-            datetime.datetime.fromisoformat("2012-12-12 08:05:10"),
-            datetime.datetime.fromisoformat("2012-12-12 08:08:10"),
-    datetime.datetime.fromisoformat("2012-12-12 08:09:10"),
-             datetime.datetime.fromisoformat("2012-12-12 08:35:10"),
-    datetime.datetime.fromisoformat("2012-12-12 14:05:10"),
-             datetime.datetime.fromisoformat("2012-12-12 15:05:10"),
-    datetime.datetime.fromisoformat("2012-12-12 18:08:10"),
+            datetime.datetime.fromisoformat("2012-12-12 08:00:00"),
+            datetime.datetime.fromisoformat("2012-12-12 08:20:00"),
+    datetime.datetime.fromisoformat("2012-12-12 08:40:00"),
+             datetime.datetime.fromisoformat("2012-12-12 09:00:00"),
+    datetime.datetime.fromisoformat("2012-12-12 14:00:00"),
+             datetime.datetime.fromisoformat("2012-12-12 15:00:00"),
+    datetime.datetime.fromisoformat("2012-12-12 18:00:00"),
+    datetime.datetime.fromisoformat("2012-12-12 23:00:00"),
              ]
 def make_curl(text):
     return f"\
@@ -128,7 +129,8 @@ def hello_world():  # put application's code here
         {'call_num':demo_idx, 'call_type':press_type, 'call_time':demo_time[demo_idx]}
     )
     send_notification(action_exec['action_type']) # тут все действия
-    demo_idx+=1 # demo
+    if press_type == 'click':
+        demo_idx+=1 # cool demo
     return 'Bot triggered'
 
 @app.route("/", methods=['OPTIONS'], provide_automatic_options=False)
